@@ -1,0 +1,27 @@
+# Ignorar carpetas de compilación y base de datos de Quartus
+/db/
+/incremental_db/
+/output_files/
+/simulation/
+/greybox_tmp/
+
+# Ignorar archivos de reporte y temporales
+*.rpt
+*.chg
+*.log
+*.htm
+*.eqn
+*.pin
+*.sof
+*.pof
+*.jam
+*.jbc
+*.qws
+*.smsg
+*.summary
+*.done
+*.jdi
+
+# Archivos de copia de seguridad
+*.bak
+*_bak.*
