@@ -1,6 +1,6 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-PACKAGE instruction_set IS
+PACKAGE instructions IS
   -- Carga y movimiento
   CONSTANT LDA_IMM : std_logic_vector(7 DOWNTO 0) := x"01"; -- Carga valor inmediato a acumulador
   CONSTANT LDA_MEM : std_logic_vector(7 DOWNTO 0) := x"02"; -- Carga valor de memoria a acumulador
@@ -26,11 +26,11 @@ PACKAGE instruction_set IS
   CONSTANT BCLE : std_logic_vector(7 DOWNTO 0) := x"39"; -- Salto si la bandera LESS o EQUAL
   -- Control
   CONSTANT CMP_IMM : std_logic_vector(7 DOWNTO 0) := x"40"; -- Compara ACC con valor inmediato
-  CONSTANT SLEEP : std_logic_vector(7 DOWNTO 0) := x"41"; -- Suspender ejecución por un tiempo
+  CONSTANT DELAY : std_logic_vector(7 DOWNTO 0) := x"41"; -- Suspender ejecución por un tiempo
   CONSTANT ON_LED : std_logic_vector(7 DOWNTO 0) := x"42";
   CONSTANT OFF_LED : std_logic_vector(7 DOWNTO 0) := x"43";
   CONSTANT ON_LEDR : std_logic_vector(7 DOWNTO 0) := x"44";
   CONSTANT CMP_REG : std_logic_vector(7 DOWNTO 0) := x"45";
-  CONSTANT DISPLAY : std_logic_vector(7 DOWNTO 0) := x"46";
+  CONSTANT PRINT : std_logic_vector(7 DOWNTO 0) := x"46";
   CONSTANT HALT : std_logic_vector(7 DOWNTO 0) := x"FF"; -- Detener ejecución
-END PACKAGE instruction_set;
+END PACKAGE instructions;

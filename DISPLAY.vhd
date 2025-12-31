@@ -1,7 +1,8 @@
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.NUMERIC_STD.ALL;
-ENTITY DISPLAY_CONTROLLER IS
+ENTITY DISPLAY IS
+  GENERIC (clk_freq : integer := 50000);
   PORT (
     clk : IN STD_LOGIC;
     reset : IN STD_LOGIC;
@@ -9,9 +10,9 @@ ENTITY DISPLAY_CONTROLLER IS
     segments : OUT STD_LOGIC_VECTOR (6 DOWNTO 0);
     anodes : OUT STD_LOGIC_VECTOR (3 DOWNTO 0)
   );
-END DISPLAY_CONTROLLER;
-ARCHITECTURE Behavioral OF DISPLAY_CONTROLLER IS
-  SIGNAL refresh_counter : INTEGER RANGE 0 TO 50000 := 0;
+END DISPLAY;
+ARCHITECTURE Behavioral OF DISPLAY IS
+  SIGNAL refresh_counter : INTEGER RANGE 0 TO clk_freq := 0;
   SIGNAL digit_sel : INTEGER RANGE 0 TO 3 := 0;
   SIGNAL nibble_to_show : STD_LOGIC_VECTOR(3 DOWNTO 0);
 BEGIN
@@ -21,7 +22,7 @@ BEGIN
       refresh_counter <= 0;
       digit_sel <= 0;
     ELSIF rising_edge(clk) THEN
-      IF refresh_counter = 50000 THEN
+      IF refresh_counter = clk_freq THEN
         refresh_counter <= 0;
         IF digit_sel = 3 THEN
           digit_sel <= 0;
