@@ -10,10 +10,10 @@ ENTITY CPU IS
   PORT (
     clk : IN std_logic;
     reset : IN std_logic;
-    sw : IN std_logic_vector(1 DOWNTO 0);
-    leds : OUT std_logic_vector(4 DOWNTO 0);
-    segments : OUT std_logic_vector(6 DOWNTO 0); 
-    digits : OUT std_logic_vector(3 DOWNTO 0) 
+    switch : IN std_logic_vector(1 DOWNTO 0);
+    led : OUT std_logic_vector(4 DOWNTO 0);
+    seg : OUT std_logic_vector(6 DOWNTO 0); 
+    dig : OUT std_logic_vector(3 DOWNTO 0) 
   );
 
 END ENTITY CPU;
@@ -29,7 +29,7 @@ ARCHITECTURE Behavioral OF CPU IS
   -- =========================================
   -- MAQUINA DE ESTADOS PARA UNIDAD DE CONTROL
   -- =========================================
-  TYPE STATE IS (FETCH_MEM, FETCH, DECODE, MEM_SYNC, /*EXECUTE,*/ EXE_MOV, EXE_ALU, EXE_BRAN, EXE_DELAY);
+  TYPE STATE IS (FETCH_MEM, FETCH, DECODE, MEM_SYNC, EXE_MOV, EXE_ALU, EXE_BRAN, EXE_DELAY, HALT);
   SIGNAL from_mem : boolean := false;
   SIGNAL flag_branch : std_logic := '0';
   SIGNAL current_state : STATE := FETCH;
@@ -65,8 +65,8 @@ ARCHITECTURE Behavioral OF CPU IS
   -- =======================================
   -- SEÑALES INSTRUCCIÓN DE DELAY
   -- =======================================
-  SIGNAL counter_delay : INTEGER := 0;
-  SIGNAL target_delay : INTEGER := 0;
+  SIGNAL counter : INTEGER := 0;
+  SIGNAL t : INTEGER := 0;
 
 BEGIN
   -- =======================================
@@ -103,26 +103,32 @@ BEGIN
       clk => clk, 
       reset => display_reset, 
       data_in => display_number, 
-      segments => segments, 
-      anodes => digits
+      segments => seg, 
+      anodes => dig
     );
  
 U_CONTROL: PROCESS (clk, reset)
   VARIABLE op_code : std_logic_vector(7 DOWNTO 0);
   VARIABLE operand : std_logic_vector(7 DOWNTO 0);
-  VARIABLE led : INTEGER RANGE 0 TO 4;
+  VARIABLE index : INTEGER RANGE 0 TO 4;
   CONSTANT CLK_FREQ : INTEGER := 50000000;
   BEGIN
     IF NOT reset THEN 
       current_state <= FETCH_MEM;
-      CASE NOT sw IS
-        WHEN "00" => PC <= EQ1_ADDR; 
-        WHEN "01" => PC <= EQ2_ADDR; 
-        WHEN "10" => PC <= EQ3_ADDR; 
-        WHEN OTHERS => PC <= 255;
-      END CASE;
-      leds <= (OTHERS => '0');
+      led <= (OTHERS => '0');
       display_reset <= '0';
+		t <= 0;
+		counter <= 0;
+		r <= (0 to 3 => (x"0000"));
+		IF NOT switch = "00" THEN
+		  PC <= EQ1_ADDR;
+		ELSIF NOT switch = "01" THEN
+		  PC <= EQ2_ADDR;
+		ELSIF NOT switch = "10" THEN
+		  PC <= EQ3_ADDR;
+		ELSE
+		  PC <= 255;
+		END IF;
     ELSIF rising_edge(clk) THEN
       CASE current_state IS
         WHEN FETCH_MEM => 
@@ -214,26 +220,26 @@ U_CONTROL: PROCESS (clk, reset)
 				  flag_branch <= LESS OR EQU;
 				  current_state <= EXE_BRAN;
             WHEN DELAY => 
-              target_delay <= CLK_FREQ * to_integer(unsigned(operand));
+              t <= CLK_FREQ * to_integer(unsigned(operand));
 				  current_state <= EXE_DELAY;
             WHEN ON_LED => 
-              led := to_integer(unsigned(operand));
-              leds(led) <= '1';
+              index := to_integer(unsigned(operand));
+              led(index) <= '1';
               current_state <= FETCH_MEM;
             WHEN OFF_LED => 
-              led := to_integer(unsigned(operand));
-              leds(led) <= '0';
+              index:= to_integer(unsigned(operand));
+              led(index) <= '0';
               current_state <= FETCH_MEM;
             WHEN ON_LEDR => 
-              led := to_integer(unsigned(r(to_integer(unsigned(operand)))));
-              leds(led) <= '1';
+              index := to_integer(unsigned(r(to_integer(unsigned(operand)))));
+              led(index) <= '1';
               current_state <= FETCH_MEM;
             WHEN PRINT => 
               display_reset <= '1';
               display_number <= r(AX);
               current_state <= FETCH_MEM;
             WHEN HALT => 
-              leds <= (OTHERS => '0');
+              led <= (OTHERS => '0');
               display_number <= x"0000";
               current_state <= DECODE;
             WHEN OTHERS => NULL;
@@ -258,13 +264,14 @@ U_CONTROL: PROCESS (clk, reset)
 			 END IF;
 			 current_state <= FETCH_MEM;
 		  WHEN EXE_DELAY =>
-		    IF counter_delay < target_delay THEN
-            counter_delay <= counter_delay + 1;
+		    IF counter < t THEN
+            counter <= counter + 1;
             current_state <= EXE_DELAY;
           ELSE
-            counter_delay <= 0;
+            counter <= 0;
             current_state <= FETCH_MEM;
           END IF;
+		  WHEN HALT => current_state <= HALT; --
       END CASE;
     END IF;
   END PROCESS U_CONTROL;
