@@ -1,8 +1,0 @@
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
-PACKAGE constants IS
-  CONSTANT AX : INTEGER := 0;
-  CONSTANT DX : INTEGER := 1;
-  CONSTANT CX : INTEGER := 2;
-  CONSTANT DX : INTEGER := 3;
-END PACKAGE constants;
