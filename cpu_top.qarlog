@@ -1,26 +1,26 @@
-Quartus II Archive log --	D:/vhdl/cpu_p3v2/cpu_top.qarlog
+Quartus II Archive log --	C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/cpu_top.qarlog
 
-Archive:	D:/vhdl/cpu_p3v2/cpu_top.qar
-Date:		Sun Dec 28 21:52:37 2025
+Archive:	C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/cpu_top.qar
+Date:		Wed Jan 07 12:43:40 2026
 Quartus II 64-Bit		13.1.0 Build 162 10/23/2013 SJ Web Edition
 
 	=========== Files Selected: ===========
-D:/vhdl/cpu_p3v2/ARITH_UNIT.vhd
-D:/vhdl/cpu_p3v2/COMPARATOR.vhd
-D:/vhdl/cpu_p3v2/CPU_TOP.vhd
-D:/vhdl/cpu_p3v2/Comp1Bit.vhd
-D:/vhdl/cpu_p3v2/Comparator.vhd
-D:/vhdl/cpu_p3v2/DISPLAY_CONTROLLER.vhd
-D:/vhdl/cpu_p3v2/INSTRUCTION_SET.vhd
-D:/vhdl/cpu_p3v2/PROGRAM_MEMORY.vhd
-D:/vhdl/cpu_p3v2/REGISTERS.vhd
-D:/vhdl/cpu_p3v2/cpu_top.qpf
-D:/vhdl/cpu_p3v2/cpu_top.qsf
-D:/vhdl/cpu_p3v2/db/cpu_top.db_info
-D:/vhdl/cpu_p3v2/incremental_db/compiled_partitions/cpu_top.db_info
-D:/vhdl/cpu_p3v2/sim.vwf
-D:/vhdl/cpu_p3v2/sim2.vwf
-d:/altera/quartus/bin64/assignment_defaults.qdf
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/ARITH_UNIT.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/COMPARATOR.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/COMPARATOR_1_BIT.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/CONSTANTS.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/CPU.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/Comparator.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/DISPLAY.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/INSTRUCTIONS.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/MAIN_MEMORY.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/PROGRAM.vhd
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/cpu_top.qpf
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/cpu_top.qsf
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/db/cpu_top.cmp.hdb
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/db/cpu_top.db_info
+C:/Users/RiasG/OneDrive/Documentos/p3_cpu_ro/incremental_db/compiled_partitions/cpu_top.db_info
+c:/altera/13.1/quartus/bin64/assignment_defaults.qdf
 	======= Total: 16 files to archive =======
 
 	================ Status: ===============
